@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from SocketServer import ThreadingMixIn
 import threading
-import cgi
+import json
 
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 9876
@@ -16,9 +18,7 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write('\n')
         return
 
-    def do_POST(self):
-        # Parse the form data posted
-
+    def do_POST(self): # Parse the form data posted
         '''
         ctype, pdict = cgi.parse_header(self.headers['content-type'])
         if ctype == 'multipart/form-data':
@@ -40,16 +40,18 @@ class Handler(BaseHTTPRequestHandler):
         file_content = self.rfile.read(content_length)
         print file_content
 
+        data = json.loads(file_content)
+        description = data['description']
+        title = data['title']
+
+        print "Prijata data: 'description'= %s , 'title'= %s " % (description, title)
 
         # Begin the response
         self.send_response(200)
         self.end_headers()
-        self.wfile.write('Client: %s\n' % str(self.client_address))
-        self.wfile.write('User-agent: %s\n' % str(self.headers['user-agent']))
-        self.wfile.write('Path: %s\n' % self.path)
-        self.wfile.write('Form data:\n')
+        #self.wfile.write('Client: %s\n' % str(self.client_address))
 
-
+        print ""
         return
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
