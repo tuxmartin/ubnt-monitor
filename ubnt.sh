@@ -1,17 +1,20 @@
 #!/bin/sh
 
+# funguje s normalnim telnetem v ubuntu
+
+#  ./ubnt.sh 10.123.1.11 9876 | telnet
+
 echo "open $1 $2"
-sleep 2
+sleep 1
 echo "POST / HTTP/1.0"
 echo "User-Agent: wtf/1.0"
-echo "Host: $3"
 echo "Content-Type: application/json"
 echo "Content-Length: 51"
 echo
-echo "{'id':1,'description':'TestTest','title':'Test007'}"
+echo '{"id":1,"description":"TestTest","title":"Test007"}'
 echo
 echo
-sleep 2
+sleep 1
 
 # JE POTREBA MIT DOBRE Content-Length !!!!!!!!!!!!!!!!!!!!!!
 
