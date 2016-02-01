@@ -3,9 +3,7 @@
 
 #  ./ubnt.sh | telnet 10.123.1.11 9876
 
-TMP="/tmp/"`mktemp`
-# V UBNT vraci mktemp "tmp.glQoTW", proto je nutne pridat na zacatek /tmp.
-# Naopak v Ubuntu (a asi vetsine distribuci) vraci celou cestu: "/tmp/tmp.glQoTW"
+TMP=`mktemp -t`
 
 echo '{ "status": '  > $TMP
 ubntbox status >> $TMP
