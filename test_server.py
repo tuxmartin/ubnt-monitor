@@ -92,6 +92,7 @@ class Handler(BaseHTTPRequestHandler):
 
         # Begin the response
         self.send_response(200)
+        self.send_header("Connection", "close")
         self.end_headers()
         #self.wfile.write('Client: %s\n' % str(self.client_address))
 
