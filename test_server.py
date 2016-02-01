@@ -40,11 +40,54 @@ class Handler(BaseHTTPRequestHandler):
         file_content = self.rfile.read(content_length)
         print file_content
 
+        # https://pythonspot.com/json-encoding-and-decoding-with-python/
         data = json.loads(file_content)
-        description = data['description']
-        title = data['title']
 
-        print "Prijata data: 'description'= %s , 'title'= %s " % (description, title)
+        firmware = data['status']['firmware']['version']
+        uptime = data['status']['host']['uptime']
+
+        for x in data['ifstats']['interfaces']:
+            if x['ifname'] == 'ath0':
+                ath0_rx_bytes = x['stats']['rx_bytes']
+            elif x['ifname'] == 'eth0':
+                eth0_tx_bytes = x['stats']['tx_bytes']
+
+        for y in data['iflist']['interfaces']:
+            if y['ifname'] == 'ath0':
+                mode = y['wireless']['mode']
+                channel = y['wireless']['channel']
+                signal = y['wireless']['signal']
+                essid = y['wireless']['essid']
+                txrate = y['wireless']['txrate']
+                rxrate = y['wireless']['rxrate']
+
+                airmax = y['wireless']['polling']['enabled']
+                airmax_quality = y['wireless']['polling']['quality']
+                airmax_capacity = y['wireless']['polling']['capacity']
+
+            if y['ifname'] == 'br0':
+                ipv4_addr = y['ipv4']['addr']
+                ipv4_netmask = y['ipv4']['netmask']
+
+        print "Prijata data: " \
+              "\n\t firmware= %s " \
+              "\n\t uptime= %s " \
+              "\n\t eth0 tx bytes= %s " \
+              "\n\t eth0 ipv4= %s / %s " \
+              "\n\t ath0 rx bytes= %s " \
+              "\n\t ath0 mode= %s " \
+              "\n\t ath0 channel= %s " \
+              "\n\t ath0 signal= %s " \
+              "\n\t ath0 essid= %s " \
+              "\n\t ath0 txrate= %s " \
+              "\n\t ath0 rxrate= %s " \
+              "\n\t ath0 airmax= %s " \
+              "\n\t ath0 airmax_quality= %s " \
+              "\n\t ath0 airmax_capacity= %s " \
+              % (firmware, uptime, eth0_tx_bytes, ipv4_addr, ipv4_netmask, ath0_rx_bytes,
+                 mode, channel, signal, essid, txrate, rxrate, airmax, airmax_quality, airmax_capacity)
+
+
 
         # Begin the response
         self.send_response(200)
