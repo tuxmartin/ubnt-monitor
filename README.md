@@ -3,6 +3,7 @@
 https://youtu.be/PZYKfAn_ex8
 
 ## Ukazkovy vystup:
+```
 /usr/bin/python2.7 /home/martin/PycharmProjects/ubnt-monitor/test_server.py
 Starting server, use <Ctrl-C> to stop
 10.123.66.3 - - [01/Feb/2016 20:56:43] "POST / HTTP/1.0" 200 -
@@ -23,4 +24,5 @@ Prijata data:
 	 ath0 airmax= 1
 	 ath0 airmax_quality= 95
 	 ath0 airmax_capacity= 89
-	 
+
+```	 
