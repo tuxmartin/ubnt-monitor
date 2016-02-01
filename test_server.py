@@ -88,6 +88,7 @@ class Handler(BaseHTTPRequestHandler):
                  mode, channel, signal, essid, txrate, rxrate, airmax, airmax_quality, airmax_capacity)
 
 
+        # TODO: pridat ukladani do databaze: https://gist.github.com/tuxmartin/ea5783d1ebb99057dd81
 
         # Begin the response
         self.send_response(200)
