@@ -1,0 +1,32 @@
+XW.v5.6.3# ubntbox
+Ubiquiti system tools colection
+Copyright 2006-2015, Ubiquiti Networks, Inc. <support@ubnt.com>
+
+This program is proprietary software; you can not redistribute it and/or modify
+it without signed agreement with Ubiquiti Networks, Inc.
+
+	ubntconf
+	cfgmtd
+	fwupdate.real
+	speedtest
+	speedsrv
+	speedicmp
+	infctld
+	factorytest
+	sysled
+	bgnd
+	mca-status
+	discover
+	status
+	ifstats.cgi
+	iflist.cgi
+	scan.cgi
+	ubnt-gps-reader
+	ubnt-caldata
+	dfs-unlock
+	sqfsck
+	ethcfg
+	ubnt-pcap-filter
+	ulogger
+	certgen
+XW.v5.6.3#
