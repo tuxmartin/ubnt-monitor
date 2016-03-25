@@ -1,0 +1,41 @@
+XM.v5.6.3# cat /etc/version
+XM.v5.6.3
+
+XM.v5.6.3# cat /etc/board.info
+board.sysid=0xe005
+board.cpurevision=0x000000c2
+board.name=NanoStation M5
+board.shortname=N5N
+board.subtype=
+board.netmodes=7
+board.hwaddr=00156D8A062E
+board.reboot=50
+board.upgrade=150
+board.phycount=2
+board.phy.1.maxmtu=1524
+board.phy.2.maxmtu=1524
+radio.1.name=
+radio.1.shortname=
+radio.1.bus=pci
+radio.1.subsystemid=0xe005
+radio.1.subvendorid=0x0777
+radio.1.txpower.max=27
+radio.1.txpower.min=-4
+radio.1.txpower.offset=5
+radio.1.ieee_modes=5
+radio.1.antennas=1
+radio.1.def_antenna=4
+radio.1.antenna.1.id=4
+radio.1.antenna.1.name=Built in
+radio.1.antenna.1.gain=16
+radio.1.antenna.1.builtin=1
+radio.1.antenna.1.chains=2
+radio.1.antenna.1.chain.1.id=0
+radio.1.antenna.1.chain.1.name=Horizontal
+radio.1.antenna.1.chain.2.id=1
+radio.1.antenna.1.chain.2.name=Vertical
+radio.1.distance_limit_km=0
+radio.1.chanbw="5,8,10,20,30,40"
+feature.rssi.leds=4
+feature.ext_reset=0
+XM.v5.6.3#

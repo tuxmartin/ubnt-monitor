@@ -5,7 +5,16 @@
 
 TMP=`mktemp -t`
 
-echo '{ "status": '  > $TMP
+FIRMWARE=`cat /etc/version | tr "\\n" " " | sed 's/.$//'`
+BOARD_NAME=`cat /etc/board.info | grep "board.name" | sed 's/board.name=//' | tr "\\n" " " |  sed 's/.$//'`
+BOARD_SHORTNAME=`cat /etc/board.info | grep "board.shortname" | sed 's/board.shortname=//' | tr "\\n" " " |  sed 's/.$//'`
+
+echo '{ "board_info": {'  > $TMP
+echo ' "firmware": "'$FIRMWARE'",'  >> $TMP
+echo ' "board_name": "'$BOARD_NAME'",'  >> $TMP
+echo ' "board_shortname": "'$BOARD_SHORTNAME'"},'  >> $TMP
+
+echo '"status": '  >> $TMP
 ubntbox status >> $TMP
 echo ', "ifstats":' >> $TMP
 ubntbox ifstats.cgi | tail -n +3 | tr "\\n" " " | tr -s '\t' ' ' | sed 's/.$//'  >> $TMP
