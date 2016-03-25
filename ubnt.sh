@@ -14,6 +14,15 @@ echo ' "firmware": "'$FIRMWARE'",'  >> $TMP
 echo ' "board_name": "'$BOARD_NAME'",'  >> $TMP
 echo ' "board_shortname": "'$BOARD_SHORTNAME'"},'  >> $TMP
 
+
+PPPOE_USERNAME=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 2`
+PPPOE_PASSWORD=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 4`
+
+echo '"pppoe":{'  >> $TMP
+echo ' "username": "'$PPPOE_USERNAME'",'  >> $TMP
+echo ' "password": "'$PPPOE_PASSWORD'"},'  >> $TMP
+
+
 echo '"status": '  >> $TMP
 ubntbox status >> $TMP
 echo ', "ifstats":' >> $TMP
