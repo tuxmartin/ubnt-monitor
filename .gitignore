@@ -2,4 +2,7 @@
 .idea/
 /.idea/
 
+# MySQL Workbench backup files
+*.bak
+
 
