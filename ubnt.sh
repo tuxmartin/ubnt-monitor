@@ -33,7 +33,6 @@ LENGTH=`cat $TMP | wc -c` # JE POTREBA MIT DOBRE Content-Length !
 echo "POST / HTTP/1.0"
 echo "User-Agent: wtf/1.0"
 echo "Content-Type: application/json"
-echo "Content-Encoding: gzip"
 echo "Cache-Control: no-cache"
 echo "Pragma: no-cache"
 echo "Connection: close"
