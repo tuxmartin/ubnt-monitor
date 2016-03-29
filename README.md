@@ -2,6 +2,14 @@
 
 https://youtu.be/PZYKfAn_ex8
 
+Data ze zarizeni je mozne posilat jako plain text, nebo gzip-base64.
+
+Neni mozne poslat samotny gzip, protoze telent client v binarni stremu zacne vyhodnocovat ridici znaky a spadne. Proto se gzip pred odeslanim prevede na base64.
+
+Serverova cast v Pythonu sama detekuje, zda je vstup plain text, nebo base64/gzip.
+
+**Pro srovnani: cisty text zaberal pri testovani 10580 bajtu a base64-gzip 3056 bajtu - 3,46x mene.**
+
 ## Ukazkovy vystup:
 ```
 /usr/bin/python2.7 /home/martin/PycharmProjects/ubnt-monitor/test_server.py

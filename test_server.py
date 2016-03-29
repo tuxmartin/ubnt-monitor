@@ -4,12 +4,29 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from SocketServer import ThreadingMixIn
 import threading
 import json
+import base64
+
 
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 9876
 
 class Handler(BaseHTTPRequestHandler):
-    
+
+    def gzipDecode(self, content):
+        import StringIO
+        import gzip
+
+        outFile = StringIO.StringIO()
+
+        compressedFile = StringIO.StringIO(content)
+        decompressedFile = gzip.GzipFile(fileobj=compressedFile)
+
+        outFile.write(decompressedFile.read())
+        outFile.flush()
+        outFile.seek(0) # You need to seek back to the start before you can read.
+
+        return outFile.read().replace('\n', '')
+
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
@@ -19,12 +36,23 @@ class Handler(BaseHTTPRequestHandler):
         return
 
     def do_POST(self): # Parse the form data posted
-        else:
-
-        '''
-
+        file_content = ''
         content_length = int(self.headers['Content-Length'])
-        file_content = self.rfile.read(content_length)
+        print "Content-Length=" + str(content_length)
+
+        if (
+            'Content-Encoding' in self.headers and
+            'Content-Transfer-Encoding' in self.headers and
+            self.headers['Content-Encoding'.lower()] == 'gzip' and
+            self.headers['Content-Transfer-Encoding'.lower()] == 'base64'
+        ):
+            print "___BASE64-GZIP"
+            compressedData = self.rfile.read(content_length)
+            file_content = self.gzipDecode(base64.b64decode(compressedData))
+        else:
+            print "___PLAIN-TEXT"
+            file_content = self.rfile.read(content_length)
+
         print file_content
 
         # https://pythonspot.com/json-encoding-and-decoding-with-python/
