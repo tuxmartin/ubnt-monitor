@@ -16,11 +16,8 @@ echo ' "board_shortname": "'$BOARD_SHORTNAME'"},'  >> $TMP
 
 
 PPPOE_USERNAME=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 2`
-PPPOE_PASSWORD=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 4`
-
 echo '"pppoe":{'  >> $TMP
-echo ' "username": "'$PPPOE_USERNAME'",'  >> $TMP
-echo ' "password": "'$PPPOE_PASSWORD'"},'  >> $TMP
+echo ' "username": "'$PPPOE_USERNAME'"},'  >> $TMP
 
 
 echo '"status": '  >> $TMP
@@ -36,6 +33,7 @@ LENGTH=`cat $TMP | wc -c` # JE POTREBA MIT DOBRE Content-Length !
 echo "POST / HTTP/1.0"
 echo "User-Agent: wtf/1.0"
 echo "Content-Type: application/json"
+echo "Content-Encoding: gzip"
 echo "Cache-Control: no-cache"
 echo "Pragma: no-cache"
 echo "Connection: close"
