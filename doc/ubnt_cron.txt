@@ -1,0 +1,23 @@
+-------------------------------------------------------------------------------------------------------
+http://community.ubnt.com/t5/LiteStation-Embedded-Radio/Adding-crond-and-crontab/m-p/888#M22:
+
+Hi,
+
+You have to do something like this:
+Put your crontab daemon exec line with parameters into /etc/persistent/rc.poststart file.
+So it will be executed after system boots up. Do not forget to send daemons to background to avoid system boot blocking.
+
+/etc/persistent/rc.poststart sample:
+
+    echo "SHELL=/bin/sh" > /etc/crontab
+    echo "PATH=/sbin:/bin:/usr/sbin:/usr/bin" >> /etc/crontab
+    echo "# m h dom mon dow user  command" >> /etc/crontab
+    echo "17 *    * * *   ubnt    echo 'DONE SOMETHING'" >> /etc/crontab
+
+    /sbin/cron &
+
+
+Just try. We are not using cron so I don't know what is exact parameters and crontab syntax has to be used.
+
+Good luck
+-------------------------------------------------------------------------------------------------------
