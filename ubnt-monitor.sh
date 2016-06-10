@@ -1,7 +1,7 @@
 #!/bin/sh
 # funguje s busybox telnetem i s normalnim telnetem v ubuntu
 
-#  ./ubnt.sh | telnet 10.123.1.11 9876
+#  ./ubnt.sh | telnet 77.78.90.200 9876
 
 GZIP=1
 #GZIP=0
