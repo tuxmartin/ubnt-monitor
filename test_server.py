@@ -7,11 +7,20 @@ import json
 import base64
 import time
 
+# syslog:
+import logging
+import logging.handlers
 
 
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 9876
 
+# syslog:
+my_logger = logging.getLogger('UBNT-MONITOR')
+my_logger.setLevel(logging.INFO)
+handler = logging.handlers.SysLogHandler(address = '/dev/log')
+
+my_logger.addHandler(handler)
 class Handler(BaseHTTPRequestHandler):
 
     def gzipDecode(self, content):
@@ -38,6 +47,7 @@ class Handler(BaseHTTPRequestHandler):
         return
 
     def do_POST(self): # Parse the form data posted
+        to_syslog = "UBNT-MONITOR "
         file_content = ''
         content_length = int(self.headers['Content-Length'])
         print "Content-Length=" + str(content_length)
@@ -100,6 +110,22 @@ class Handler(BaseHTTPRequestHandler):
                             ipv6_addr = y['addr']
                             ipv6_plen = y['plen']
 
+        to_syslog += "firmware='" + str(firmware) + "';"
+        to_syslog += "board_shortname='" + str(board_shortname) + "';"
+        to_syslog += "pppoe_username='" + str(pppoe_username) + "';"
+        to_syslog += "uptime='" + str(uptime) + "';"
+        to_syslog += "ath0_signal='" + str(signal) + "';"
+        to_syslog += "ath0_rssi='" + str(rssi) + "';"
+        to_syslog += "ath0_noisef='" + str(noisef) + "';"
+        to_syslog += "ath0_ccq='" + str(ccq) + "';"
+        to_syslog += "ath0_txrate='" + str(txrate) + "';"
+        to_syslog += "ath0_rxrate='" + str(rxrate) + "';"
+        to_syslog += "ath0_rx_bytes='" + str(rx_bytes) + "';"
+        to_syslog += "ath0_tx_bytes='" + str(tx_bytes) + "';"
+        to_syslog += "br0_ipv4_addr='" + str(ipv4_addr) + "';"
+        to_syslog += "br0_ipv4_netmask='" + str(ipv4_netmask) + "';"
+        to_syslog += "br0_ipv4_broadcast='" + str(ipv4_broadcast) + "';"
+
         print(time.strftime("%d-%m-%Y %H:%M:%S"))
         print "Prijata data: " \
               "\n\t 'firmware=%s' " \
@@ -118,14 +144,26 @@ class Handler(BaseHTTPRequestHandler):
               "\n\t 'br0_ipv4_netmask=%s' " \
               "\n\t 'br0_ipv4_broadcast=%s' " \
               % (firmware, board_shortname, pppoe_username, uptime, signal, rssi, noisef, ccq, txrate, rxrate, rx_bytes, tx_bytes, ipv4_addr, ipv4_netmask, ipv4_broadcast)
+
         if airmax_quality and airmax_capacity:
+            to_syslog += "ath0_airmax_quality='" + str(airmax_quality) + "';"
+            to_syslog += "ath0_airmax_capacity='" + str(airmax_capacity) + "';"
             print "\n\t 'ath0_airmax_quality=%s' " \
                   "\n\t 'ath0_airmax_capacity=%s' " \
                   % (airmax_quality, airmax_capacity)
+
         if ipv6_addr and ipv6_plen:
+            to_syslog += "br0_ipv6_plen='" + str(ipv6_addr) + "';"
+            to_syslog += "br0_ipv6_plen='" + str(ipv6_plen) + "';"
             print "\n\t 'br0_ipv6_addr=%s' " \
                   "\n\t 'br0_ipv6_plen=%s' " \
                   % (ipv6_addr, ipv6_plen)
+
+
+        print to_syslog
+        my_logger.info(to_syslog)
+
+        # Begin the response
         self.send_response(200)
         self.send_header("Connection", "close")
         self.end_headers()
