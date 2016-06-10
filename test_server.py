@@ -5,6 +5,8 @@ from SocketServer import ThreadingMixIn
 import threading
 import json
 import base64
+import time
+
 
 
 SERVER_HOST = "0.0.0.0"
@@ -84,6 +86,7 @@ class Handler(BaseHTTPRequestHandler):
                 ipv4_addr = y['ipv4']['addr']
                 ipv4_netmask = y['ipv4']['netmask']
 
+        print(time.strftime("%d-%m-%Y %H:%M:%S"))
         print "Prijata data: " \
               "\n\t firmware= %s " \
               "\n\t uptime= %s " \
