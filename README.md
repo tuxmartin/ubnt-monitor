@@ -34,3 +34,41 @@ Prijata data:
 	 ath0 airmax_capacity= 89
 
 ```	 
+
+# Instalace
+
+## Stazeni
+Nakopirovat soubor `ubnt-monitor.sh` do `/etc/persistent/ubnt-monitor.sh` a nastavit mu prava spusteni a ulozit:
+
+```
+lokalPC$ scp ubnt-monitor.sh admin@1.2.3.4:/etc/persistent
+```
+
+```
+chmod a+x /etc/persistent/ubnt-monitor.sh
+save
+```
+
+## Automaticke spusteni kazdou minutu
+
+V UBNT je "divny" cron. Podle prispevku na foru viz soubor `doc/ubnt_cron.txt` by mel fungovat, ale nefunguje.
+Proto jsem pouzil while-true loop.
+
+Do `/etc/persistent/rc.poststart` pridat:
+
+```bash
+while true; do
+  /etc/persistent/ubnt-monitor.sh | telnet 10.20.30.40 9876
+  sleep 60
+done &
+```
+TODO: cyklus se nesposti, opravit!
+
+Kde `10.20.30.40 9876` je IP a port serveru, na ktery se posilaji data.
+
+A nakonec ulozit a restartovat zarizeni:
+
+```bash
+save
+reboot
+```
