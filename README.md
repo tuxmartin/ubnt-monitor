@@ -72,3 +72,9 @@ A nakonec ulozit a restartovat zarizeni:
 save
 reboot
 ```
+
+## Na server spustit
+
+```bash
+python ubnt-monitor-server.py
+```
