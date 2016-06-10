@@ -73,8 +73,43 @@ save
 reboot
 ```
 
-## Na server spustit
+## Na serveru spustit
 
 ```bash
 python ubnt-monitor-server.py
 ```
+
+## Logy
+
+### Filtrovani syslogem do souboru
+
+Vytvorit soubor `/etc/rsyslog.d/99-ubnt-monitor.conf`
+
+```
+:msg,contains,"UBNT-MONITOR " /var/log/ubnt-monitor.log
+```
+
+a logy se budou ukladat do `/var/log/ubnt-monitor.log`
+
+### logrotate
+
+Vytvorit soubor `/etc/logrotate.d/ubnt-monitor` s obsahem
+
+```
+/var/log/ubnt-monitor.log
+{
+        rotate 30
+        daily
+        missingok
+        notifempty
+        compress
+        delaycompress
+        postrotate
+                reload rsyslog >/dev/null 2>&1 || true
+        endscript
+}
+```
+
+udrzuje se 30 souboru a kazdy den se provede rotace. Stare soubory s komprimuji.
+Mozno zamenit `daily` za `weekly`, nebo `monthly`.
+
