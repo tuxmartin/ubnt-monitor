@@ -55,7 +55,7 @@ echo ' "board_name": "'$BOARD_NAME'",'  >> $TMP
 echo ' "board_shortname": "'$BOARD_SHORTNAME'"},'  >> $TMP
 
 
-#PPPOE_USERNAME=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 2`
+PPPOE_USERNAME=`cat /etc/ppp/pap-secrets | cut -s -d "\"" -f 2`
 echo '"pppoe":{'  >> $TMP
 echo ' "username": "'$PPPOE_USERNAME'"},'  >> $TMP
 
