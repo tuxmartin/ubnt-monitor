@@ -37,34 +37,34 @@ Prijata data:
 
 # Instalace
 
-## Stazeni
-Nakopirovat soubor `ubnt-monitor.sh` do `/etc/persistent/ubnt-monitor.sh` a nastavit mu prava spusteni a ulozit:
+## UBNT
+
+### Stazeni
+Nakopirovat soubory `ubnt-monitor.sh` a `ubnt-monitor-run.sh` do `/etc/persistent/` a nastavit jim prava spusteni a ulozit:
 
 ```
 lokalPC$ scp ubnt-monitor.sh admin@1.2.3.4:/etc/persistent
+lokalPC$ scp ubnt-monitor-run.sh admin@1.2.3.4:/etc/persistent
 ```
 
 ```
 chmod a+x /etc/persistent/ubnt-monitor.sh
+chmod a+x /etc/persistent/ubnt-monitor-run.sh
 save
 ```
 
-## Automaticke spusteni kazdou minutu
+### Automaticke spusteni kazdou minutu
 
 V UBNT je "divny" cron. Podle prispevku na foru viz soubor `doc/ubnt_cron.txt` by mel fungovat, ale nefunguje.
 Proto jsem pouzil while-true loop.
 
-Do `/etc/persistent/rc.poststart` pridat:
+Do souboru `/etc/persistent/rc.poststart` pridat:
 
 ```bash
-while true; do
-  /etc/persistent/ubnt-monitor.sh | telnet 10.20.30.40 9876
-  sleep 60
-done &
+/etc/persistent/ubnt-monitor-run.sh &
 ```
-**TODO: cyklus se nespousti, opravit!**
 
-Kde `10.20.30.40 9876` je IP a port serveru, na ktery se posilaji data.
+V souboru `/etc/persistent/ubnt-monitor-run.sh` zmenit IP serveru, na ktery se posilaji data.
 
 A nakonec ulozit a restartovat zarizeni:
 
@@ -73,15 +73,19 @@ save
 reboot
 ```
 
-## Na serveru spustit
+## Server
+
+### Serverova app
+
+Spustit
 
 ```bash
 python ubnt-monitor-server.py
 ```
 
-## Logy
+### Logy
 
-### Filtrovani syslogem do souboru
+#### Filtrovani syslogem do souboru
 
 Vytvorit soubor `/etc/rsyslog.d/99-ubnt-monitor.conf`
 
@@ -91,7 +95,7 @@ Vytvorit soubor `/etc/rsyslog.d/99-ubnt-monitor.conf`
 
 a logy se budou ukladat do `/var/log/ubnt-monitor.log`
 
-### logrotate
+#### logrotate
 
 Vytvorit soubor `/etc/logrotate.d/ubnt-monitor` s obsahem
 
@@ -110,6 +114,5 @@ Vytvorit soubor `/etc/logrotate.d/ubnt-monitor` s obsahem
 }
 ```
 
-udrzuje se 30 souboru a kazdy den se provede rotace. Stare soubory s komprimuji.
+udrzuje se 30 souboru a kazdy den se provede rotace. Stare soubory se komprimuji.
 Mozno zamenit `daily` za `weekly`, nebo `monthly`.
-
