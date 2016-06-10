@@ -102,9 +102,6 @@ class Handler(BaseHTTPRequestHandler):
               % (firmware, uptime, eth0_tx_bytes, ipv4_addr, ipv4_netmask, ath0_rx_bytes,
                  mode, channel, signal, essid, txrate, rxrate, airmax, airmax_quality, airmax_capacity)
 
-
-        # TODO: pridat ukladani do databaze: https://gist.github.com/tuxmartin/ea5783d1ebb99057dd81
-
         # Begin the response
         self.send_response(200)
         self.send_header("Connection", "close")
@@ -121,32 +118,3 @@ if __name__ == '__main__':
     server = ThreadedHTTPServer((SERVER_HOST, SERVER_PORT), Handler)
     print 'Starting server, use <Ctrl-C> to stop'
     server.serve_forever()
-
-
-'''
-Test:
-
-
-
-    curl -v -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"id":1,"description":"TestTest","title":"Test007","evaluationCondition":">=","evaluationNodeAddress":12345,"evaluationValue":"11","evaluationChannel":1,"actionChannel":2,"actionNodeAddress":12345,"actionData":"22"}' http://localhost:9876
-
-
-
-POST / HTTP/1.1
-User-Agent: curl/7.35.0
-Host: localhost:9876
-Content-Type: application/json
-Accept: application/json
-Content-Length: 215
-
-{"id":1,"description":"TestTest","title":"Test007","evaluationCondition":">=","evaluationNodeAddress":12345,"evaluationValue":"11","evaluationChannel":1,"actionChannel":2,"actionNodeAddress":12345,"actionData":"22"}HTTP/1.0 200 OK
-Server: BaseHTTP/0.3 Python/2.7.6
-Date: Sun, 31 Jan 2016 10:30:21 GMT
-
-Client: ('127.0.0.1', 53279)
-User-agent: curl/7.35.0
-Path: /
-Form data:
-
-
-'''
