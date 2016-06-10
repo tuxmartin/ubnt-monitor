@@ -93,6 +93,12 @@ Vytvorit soubor `/etc/rsyslog.d/99-ubnt-monitor.conf`
 :msg,contains,"UBNT-MONITOR " /var/log/ubnt-monitor.log
 ```
 
+a restartovat:
+
+```
+# service rsyslog restart
+```
+
 a logy se budou ukladat do `/var/log/ubnt-monitor.log`
 
 #### logrotate
