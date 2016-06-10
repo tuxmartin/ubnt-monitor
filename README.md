@@ -62,7 +62,7 @@ while true; do
   sleep 60
 done &
 ```
-TODO: cyklus se nesposti, opravit!
+**TODO: cyklus se nespousti, opravit!**
 
 Kde `10.20.30.40 9876` je IP a port serveru, na ktery se posilaji data.
 
