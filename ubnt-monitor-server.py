@@ -153,7 +153,7 @@ class Handler(BaseHTTPRequestHandler):
                   % (airmax_quality, airmax_capacity)
 
         if ipv6_addr and ipv6_plen:
-            to_syslog += "br0_ipv6_plen='" + str(ipv6_addr) + "';"
+            to_syslog += "br0_ipv6_addr='" + str(ipv6_addr) + "';"
             to_syslog += "br0_ipv6_plen='" + str(ipv6_plen) + "';"
             print "\n\t 'br0_ipv6_addr=%s' " \
                   "\n\t 'br0_ipv6_plen=%s' " \
