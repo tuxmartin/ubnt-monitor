@@ -109,6 +109,12 @@ class Handler(BaseHTTPRequestHandler):
                         if y['addr'].startswith('2001'): # doplnit podle IPv6
                             ipv6_addr = y['addr']
                             ipv6_plen = y['plen']
+            if x['ifname'] == 'eth0':
+                if x['ipv6']:
+                    for y in x['ipv6']:
+                        if y['addr'].startswith('2001'): # doplnit podle IPv6
+                            ipv6_addr = y['addr']
+                            ipv6_plen = y['plen']
 
         to_syslog += "firmware='" + str(firmware) + "';"
         to_syslog += "board_shortname='" + str(board_shortname) + "';"
