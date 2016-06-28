@@ -83,6 +83,19 @@ Spustit
 python ubnt-monitor-server.py
 ```
 
+Jako "sluzba" - TODO: vyresit lepe
+
+Do `/etc/rc.local` pridat pred `exit 0`
+
+```bash
+while true; do
+  python ubnt-monitor-server.py # doplnit cestu ke skriptu
+  sleep 5
+done &
+```
+
+** !! & za done je dulezity !!  **
+
 ### Logy
 
 #### Filtrovani syslogem do souboru
