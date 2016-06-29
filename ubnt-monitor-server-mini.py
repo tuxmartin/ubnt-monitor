@@ -104,6 +104,9 @@ class Handler(BaseHTTPRequestHandler):
         print to_syslog
         my_logger.info(to_syslog)
 
+        # Ukazkovy vystup:
+        #    UBNT-MONITOR pppoe_username='ipv6';br0_ipv6_addr='2001:1234:4321:1111:222:33:77:88';br0_ipv6_plen='62';
+
         # Begin the response
         self.send_response(200)
         self.send_header("Connection", "close")
