@@ -104,13 +104,13 @@ class Handler(BaseHTTPRequestHandler):
 
         for x in data['iflist']['interfaces']: # IPv6
             if x['ifname'] == 'br0':
-                if x['ipv6']:
+                if 'ipv6' in x:
                     for y in x['ipv6']:
                         if y['addr'].startswith('2001'): # doplnit podle IPv6
                             ipv6_addr = y['addr']
                             ipv6_plen = y['plen']
             if x['ifname'] == 'eth0':
-                if x['ipv6']:
+                if 'ipv6' in x:
                     for y in x['ipv6']:
                         if y['addr'].startswith('2001'): # doplnit podle IPv6
                             ipv6_addr = y['addr']
