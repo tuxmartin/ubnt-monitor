@@ -102,7 +102,7 @@ class Handler(BaseHTTPRequestHandler):
                     ipv4_netmask = x['ipv4']['netmask']
                     ipv4_broadcast = x['ipv4']['broadcast']
 
-        for x in data['status']['interfaces']: # IPv6
+        for x in data['iflist']['interfaces']: # IPv6
             if x['ifname'] == 'br0':
                 if x['ipv6']:
                     for y in x['ipv6']:
